@@ -8,8 +8,11 @@ package br.edu.utfpr.dao;
 import br.edu.utfpr.modelo.Pessoa;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -22,7 +25,7 @@ public class PessoaDaoDerby implements Dao{
     //quando eu construir um objeto dessa classe, vou conectar ao banco
     public PessoaDaoDerby(){
         //lembrem-se de usar suas credenciais;
-        String username = "daniel";
+        String username = "romario";
         String password = "123";
         String url= "jdbc:derby://localhost:1527/MeuBancoDeDados";
         
@@ -40,16 +43,48 @@ public class PessoaDaoDerby implements Dao{
     
     @Override
     public void adicionar(Pessoa p) {
-        
+        String instrucao = "INSERT INTO PESSOA(NOME,SOBRENOME,IDADE) VALUES (" 
+                +"'" + p.getNome()+ "',"
+                +"'" + p.getSobrenome()+ "',"
+                + p.getIdade()+")"; 
+        System.out.println(instrucao);
+        try{
+            stmt.executeUpdate(instrucao);
+        }catch (SQLException se) {
+            System.out.println(se);
+            
+        }
     }
 
     @Override
     public void remover(Pessoa p) {
+        String instrucao = "DELETE FROM PESSOA WHERE NOME LIKE '%" + p.getNome()+"%'";
         
+        System.out.println(instrucao);
+        try{
+            stmt.executeUpdate(instrucao);
+        }catch (SQLException se) {
+            System.out.println(se);
+            
+        }
     }
 
     @Override
     public void listarTudo() {
+        String instrucao = "SELECT* FROM PESSOA";
+        try {
+            
+            ResultSet rs = stmt.executeQuery(instrucao);
+            
+            while(rs.next()){
+                System.out.println("Nome: " + rs.getString("NOME")
+                        + "   Sobrenome: " + rs.getString("SOBRENOME")
+                        + "   Idade: " + rs.getString("IDADE"));
+            }
+            
+        } catch (SQLException se) {
+            System.out.println(se);
+        }
         
     }
     
