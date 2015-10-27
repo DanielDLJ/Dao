@@ -22,11 +22,15 @@ public class App {
         Pessoa jose = new Pessoa("Jose", "Silva", 22);
         
         Dao dao = new PessoaDaoDerby();
-//        dao.adicionar(joao);
-//        dao.adicionar(jose);
-//        dao.adicionar(pedro);
-//        
-//        dao.listarTudo();
+        
+        dao.adicionar(joao);
+        dao.adicionar(jose);
+        dao.adicionar(pedro);
+        
+        dao.remover(joao);
+        dao.remover(jose);
+        
+        dao.listarTudo();
 //        
 //        System.out.println("\n\n -----Vamos remover");
 //        dao.remover(jose);
